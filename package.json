@@ -1,18 +1,28 @@
+
 {
-  "name": "discord",
+  "name": "codegpt-discord",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "codeGPT bot on discord",
+  "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon dist/index.js",
+    "watch": "tsc-watch --onSuccess \"npm run start\""
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
-    "discord.js": "^14.13.0",
-    "dotenv": "^16.3.1",
-    "judini": "^1.1.2"
+    "@libsql/client": "^0.4.3",
+    "@slack/bolt": "^3.17.1",
+    "@slack/types": "^2.11.0",
+    "@types/node": "^20.11.16",
+    "axios": "^1.6.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
+    "discord.js": "^14.13.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "nodemon": "^3.0.3",
+    "tsc-watch": "^6.0.4"
   }
 }

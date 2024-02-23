@@ -2,8 +2,9 @@ import axios from "axios";
 import { Router, Request, Response } from "express";
 import dotenv from "dotenv";
 import nacl from "tweetnacl";
-import handleInteraction from "../start";
+import handleInteraction from "../redirector";
 import { registerCommand } from "../command-creator";
+import redirector from "../redirector";
 
 dotenv.config();
 
@@ -54,8 +55,7 @@ mainRouter.post("/event", (req: Request, res: Response) => {
     }
 
     // Aquí manejarías otros tipos de eventos de interacción
-    console.log("Received event", req.body);
-    handleInteraction(req.body, res);
+    redirector(req.body, res);
     // Envía una respuesta  genérica para otros eventos
   } catch (error: any) {
     console.error("Error handling event", error);

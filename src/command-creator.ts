@@ -10,13 +10,22 @@ const APPLICATION_ID = process.env.DISCORD_APPLICATION_ID; // Reemplaza con el I
 export async function registerCommand() {
   console.log("entramos a registrar", BOT_TOKEN, APPLICATION_ID);
   const commandData = {
-    name: "chat",
-    description: "Registra un mensaje y obtiene una respuesta",
+    name: "resumencanal",
+    description:
+      "Obtiene los mensajes de un canal desde una fecha y hora específicas",
     options: [
       {
         type: 3, // Tipo 3 corresponde a STRING
-        name: "mensaje",
-        description: "El mensaje que quieres registrar",
+        name: "fecha",
+        description:
+          "La fecha desde la cual obtener los mensajes (formato YYYY-MM-DD)",
+        required: true,
+      },
+      {
+        type: 3, // Tipo 3 corresponde a STRING
+        name: "hora",
+        description:
+          "La hora desde la cual obtener los mensajes (formato HH:MM)",
         required: true,
       },
     ],

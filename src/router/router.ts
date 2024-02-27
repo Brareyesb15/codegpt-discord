@@ -72,4 +72,44 @@ mainRouter.get("/createCommand", (req: Request, res: Response) => {
   }
 });
 
+mainRouter.get("/discord-callback", async (req: Request, res: Response) => {
+  try {
+    console.log("Te llamaron", req.query.code);
+    const code = req.query.code; // Captura el código de autorización
+    if (typeof code !== "string") {
+      return res.status(400).send("Authorization code is missing or invalid");
+    }
+
+    // Crea una instancia de URLSearchParams con los parámetros necesarios
+    const params = new URLSearchParams({
+      client_id: process.env.DISCORD_APPLICATION_ID as string,
+      client_secret: process.env.DISCORD_CLIENT_SECRET as string,
+      code: code,
+      grant_type: "authorization_code",
+      redirect_uri: `https://cf72-181-63-144-178.ngrok-free.app/discord-callback`,
+      scope: "identify", // Asegúrate de incluir todos los scopes necesarios aquí
+    });
+
+    // Intercambia el código por un token de acceso
+    const tokenResponse = await axios.post(
+      "https://discord.com/api/oauth2/token",
+      params.toString(),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    console.log("Token response", tokenResponse);
+    // trabajas acá con la db y el registro del token.
+
+    // acá rediriges al front nuevamente. Quizá le avisa al front que haga una petición para que actualice la conexión.
+    res.redirect("/welcome");
+  } catch (error: any) {
+    console.error("Error in /discord-callback", error);
+    res.status(500).send(error.message);
+  }
+});
+
 export default mainRouter;

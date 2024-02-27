@@ -121,7 +121,7 @@ async function resumidor(mensajes: any[]): Promise<string> {
     const message = [
       {
         role: "user",
-        content: `Haz un resumen de esta conversación: ${resumen}`,
+        content: `Haz un resumen de esta conversación: ${resumen}. Si no recibes nada de info ahí, responde que no hay conversaciones para la fecha requerida`,
       },
     ];
     return await completions(message, agent as string);

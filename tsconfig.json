@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "target": "es6", // Versión de ECMAScript de salida
+      "module": "commonjs", // Sistema de módulos
+      "outDir": "./dist", // Directorio de salida para los archivos compilados
+      "strict": true, // Habilita un conjunto estricto de chequeos de tipo
+      "esModuleInterop": true, // Permite la interoperabilidad de módulos ES6 con módulos CommonJS/AMD
+      "skipLibCheck": true, // Omite la verificación de tipos en las declaraciones de archivos .d.ts
+      "forceConsistentCasingInFileNames": true // Asegura que el caso de las referencias a archivos sea consistente
+    },
+    "include": ["src/**/*"], // Los archivos a incluir en la compilación
+    "exclude": ["node_modules"] // Los archivos a excluir de la compilación
+  }

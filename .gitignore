@@ -6,8 +6,6 @@ yarn.lock
 # Directorio de salida de la compilación de TypeScript
 dist/
 
-# Archivos de configuración de TypeScript
-tsconfig.json
 
 # Archivos de entorno
 .env

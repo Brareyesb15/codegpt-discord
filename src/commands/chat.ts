@@ -12,21 +12,21 @@ export async function handleChatCommand(
   rest: REST,
   CLIENT_ID: string | undefined
 ) {
-  const conversation = [
-    {
-      role: "user",
-      content: body.data.options[0].value,
-    },
-  ];
-
-  const agentId = process.env.CODEGPT_AGENT_ID as string;
-  const res = await completions(conversation, agentId);
-
-  if (!res) {
-    return response.status(200).send("No response generated");
-  }
-
   try {
+    const conversation = [
+      {
+        role: "user",
+        content: body.data.options[0].value,
+      },
+    ];
+
+    const agentId = process.env.CODEGPT_AGENT_ID as string;
+    const res = await completions(conversation, agentId);
+
+    if (!res) {
+      return response.status(200).send("No response generated");
+    }
+
     await rest.post(Routes.webhook(CLIENT_ID as string, body.token), {
       body: { content: res },
     });

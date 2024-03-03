@@ -26,9 +26,9 @@ export default async function redirector(body: any, response: Response) {
       case "chat":
         await handleChatCommand(body, response, rest, CLIENT_ID);
         break;
-      case "resumencanal":
-        await handleResumenCanalCommand(body, response, rest, CLIENT_ID);
-        break;
+      // case "resumencanal":
+      //   await handleResumenCanalCommand(body, response, rest, CLIENT_ID);
+      //   break;
       default:
         console.error("Comando no reconocido");
         response.status(400).send("Comando no reconocido");

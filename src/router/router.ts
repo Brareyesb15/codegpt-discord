@@ -12,7 +12,7 @@ const mainRouter = Router();
 
 mainRouter.get("/welcome", (req: Request, res: Response) => {
   try {
-    res.status(200).send("codeGPT says: is all good man?");
+    res.status(200).send("welcome to pilibot");
   } catch (error: any) {
     res.status(400).send(error.message);
   }

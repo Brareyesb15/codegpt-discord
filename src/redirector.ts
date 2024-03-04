@@ -23,7 +23,7 @@ export default async function redirector(body: any, response: Response) {
 
     // Redireccionador de comandos
     switch (body.data.name) {
-      case "chat":
+      case "ask":
         await handleChatCommand(body, response, rest, CLIENT_ID);
         break;
       // case "resumencanal":

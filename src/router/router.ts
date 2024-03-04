@@ -2,7 +2,6 @@ import axios from "axios";
 import { Router, Request, Response } from "express";
 import dotenv from "dotenv";
 import nacl from "tweetnacl";
-import handleInteraction from "../redirector";
 import { registerCommand } from "../command-creator";
 import redirector from "../redirector";
 
@@ -86,7 +85,7 @@ mainRouter.get("/discord-callback", async (req: Request, res: Response) => {
       client_secret: process.env.DISCORD_CLIENT_SECRET as string,
       code: code,
       grant_type: "authorization_code",
-      redirect_uri: `https://cf72-181-63-144-178.ngrok-free.app/discord-callback`,
+      redirect_uri: `https://pilibot.codegpt.co/discord-callback`,
       scope: "identify", // Asegúrate de incluir todos los scopes necesarios aquí
     });
 

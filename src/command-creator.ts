@@ -6,8 +6,6 @@ const DISCORD_API_URL = "https://discord.com/api";
 const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
 const APPLICATION_ID = process.env.DISCORD_APPLICATION_ID;
 
-let COMMAND_NAME = ["ask", "channel summary"];
-
 export async function registerCommand() {
   try {
     await registerChatCommand();
@@ -52,9 +50,9 @@ export async function registerChatCommand() {
 }
 
 export async function registerSummaryCommand() {
-  console.log("entramos a registrar", BOT_TOKEN, APPLICATION_ID);
+  console.log("entramos a registrar summary", BOT_TOKEN, APPLICATION_ID);
   const commandData = {
-    name: "resumencanal",
+    name: "channel summary",
     description:
       "Obtiene los mensajes de un canal desde una fecha y hora específicas",
     options: [

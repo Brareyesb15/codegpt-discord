@@ -9,45 +9,84 @@ const APPLICATION_ID = process.env.DISCORD_APPLICATION_ID;
 let COMMAND_NAME = ["ask", "channel summary"];
 
 export async function registerCommand() {
-  // Get the list of registered commands
-  const commandsResponse = await axios.get(
-    `${DISCORD_API_URL}/applications/${APPLICATION_ID}/commands`,
-    {
-      headers: {
-        Authorization: `Bot ${BOT_TOKEN}`,
-      },
-    }
-  );
+  try {
+    await registerChatCommand();
+    await registerSummaryCommand();
 
-  COMMAND_NAME.forEach(async (commandName) => {
-    // Find the command by name to get its ID
-    const command = commandsResponse.data.find(
-      (cmd: any) => cmd.name === commandName
+    // llamar a channel summary
+  } catch (error) {
+    console.error(`Error creating the commands "":`, error);
+  }
+}
+
+export async function registerChatCommand() {
+  console.log("entramos a registrar", BOT_TOKEN, APPLICATION_ID);
+  const commandData = {
+    name: "chat",
+    description: "Registra un mensaje y obtiene una respuesta",
+    options: [
+      {
+        type: 3, // Tipo 3 corresponde a STRING
+        name: "mensaje",
+        description: "El mensaje que quieres registrar",
+        required: true,
+      },
+    ],
+  };
+
+  try {
+    const response = await axios.post(
+      `${DISCORD_API_URL}/applications/${APPLICATION_ID}/commands`,
+      commandData,
+      {
+        headers: {
+          Authorization: `Bot ${BOT_TOKEN}`,
+        },
+      }
     );
 
-    if (!command) {
-      try {
-        console.error(
-          `Command with name "${commandName}" not found, creating now...`
-        );
-        await axios.put(
-          `${DISCORD_API_URL}/applications/${APPLICATION_ID}/commands`,
-          {
-            name: commandName,
-            // Add more command properties like description, options here
-            description: "",
-            options: [],
-          },
-          {
-            headers: {
-              Authorization: `Bot ${BOT_TOKEN}`,
-            },
-          }
-        );
-        console.log(`Command with name "${commandName}" created.`);
-      } catch (error) {
-        console.error(`Error creating the command "${commandName}":`, error);
+    console.log("Comando registrado:", response.data);
+  } catch (error) {
+    console.error("Error al registrar el comando:", error);
+  }
+}
+
+export async function registerSummaryCommand() {
+  console.log("entramos a registrar", BOT_TOKEN, APPLICATION_ID);
+  const commandData = {
+    name: "resumencanal",
+    description:
+      "Obtiene los mensajes de un canal desde una fecha y hora específicas",
+    options: [
+      {
+        type: 3, // Tipo 3 corresponde a STRING
+        name: "fecha",
+        description:
+          "La fecha desde la cual obtener los mensajes (formato YYYY-MM-DD)",
+        required: true,
+      },
+      {
+        type: 3, // Tipo 3 corresponde a STRING
+        name: "hora",
+        description:
+          "La hora desde la cual obtener los mensajes (formato HH:MM)",
+        required: true,
+      },
+    ],
+  };
+  try {
+    const response = await axios.post(
+      `${DISCORD_API_URL}/applications/${APPLICATION_ID}/commands`,
+      commandData,
+      {
+        headers: {
+          Authorization: `Bot ${BOT_TOKEN}`,
+        },
       }
-    }
-  });
+    );
+
+    console.log("Comando registrado:", response.data);
+  } catch (error) {
+    console.error("Error al registrar el comando:", error);
+  }
 }

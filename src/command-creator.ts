@@ -6,11 +6,39 @@ const DISCORD_API_URL = "https://discord.com/api";
 const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
 const APPLICATION_ID = process.env.DISCORD_APPLICATION_ID;
 
+export async function commandExists(name: string) {
+  try {
+    const response = await axios.get(
+      `${DISCORD_API_URL}/applications/${APPLICATION_ID}/commands`,
+      {
+        headers: {
+          Authorization: `Bot ${BOT_TOKEN}`,
+        },
+      }
+    );
+
+    const commands = response.data;
+
+    return commands.some((command: any) => command.name === name);
+  } catch (error) {
+    console.error(`Error fetching commands:`, error);
+    return false;
+  }
+}
+
 export async function registerCommand() {
   try {
     let result = "";
-    result = await registerChatCommand();
-    result = result + (await registerSummaryCommand());
+    if (await commandExists("chat")) {
+      result = "command chat already exists. ";
+    } else {
+      result = await registerChatCommand();
+    }
+    if (await commandExists("channelsummary")) {
+      result += "command channelsummary already exists.";
+    } else {
+      result += await registerSummaryCommand();
+    }
 
     return result;
   } catch (error) {
@@ -53,7 +81,7 @@ export async function registerChatCommand() {
 export async function registerSummaryCommand() {
   console.log("entramos a registrar summary", BOT_TOKEN, APPLICATION_ID);
   const commandData = {
-    name: "channelSummary",
+    name: "channelsummary",
     description:
       "Obtiene los mensajes de un canal desde una fecha y hora específicas",
     options: [

@@ -8,10 +8,11 @@ const APPLICATION_ID = process.env.DISCORD_APPLICATION_ID;
 
 export async function registerCommand() {
   try {
-    await registerChatCommand();
-    await registerSummaryCommand();
+    let result = "";
+    result = await registerChatCommand();
+    result = result + (await registerSummaryCommand());
 
-    // llamar a channel summary
+    return result;
   } catch (error) {
     console.error(`Error creating the commands "":`, error);
   }
@@ -43,16 +44,16 @@ export async function registerChatCommand() {
       }
     );
 
-    console.log("Comando registrado:", response.data);
+    return `comando chat registrado`;
   } catch (error) {
-    console.error("Error al registrar el comando:", error);
+    return "commando chat no se pudo registrar";
   }
 }
 
 export async function registerSummaryCommand() {
   console.log("entramos a registrar summary", BOT_TOKEN, APPLICATION_ID);
   const commandData = {
-    name: "channel summary",
+    name: "channelSummary",
     description:
       "Obtiene los mensajes de un canal desde una fecha y hora específicas",
     options: [
@@ -83,8 +84,9 @@ export async function registerSummaryCommand() {
       }
     );
 
-    console.log("Comando registrado:", response.data);
-  } catch (error) {
-    console.error("Error al registrar el comando:", error);
+    return `comando channel summary registrado`;
+  } catch (error: any) {
+    console.log(error);
+    return "comando channel Summary no se pudo registrar";
   }
 }

@@ -63,10 +63,10 @@ mainRouter.post("/event", (req: Request, res: Response) => {
   }
 });
 
-mainRouter.get("/createCommand", (req: Request, res: Response) => {
+mainRouter.get("/createCommand", async (req: Request, res: Response) => {
   try {
-    registerCommand();
-    res.status(200).send("creado comando");
+    const result = await registerCommand();
+    res.status(200).send(result);
   } catch (error: any) {
     res.status(400).send(error.message);
   }
